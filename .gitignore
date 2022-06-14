@@ -1,6 +1,7 @@
 venv/
-data/perfect/
+data/
 .idea/
 __pycache__/
+weights/
 README.md
 cog.yaml
