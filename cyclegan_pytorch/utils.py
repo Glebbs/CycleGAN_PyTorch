@@ -37,6 +37,7 @@ def weights_init(m):
         torch.nn.init.zeros_(m.bias)
 
 
+# changing directories
 def order_dataset():
     folders = glob.glob('/media/vlad/20127138-1a35-451b-85c0-a84dbc12ae79/storage/gta5_2_real/cityscapes_images/val/*')
     paths = []
