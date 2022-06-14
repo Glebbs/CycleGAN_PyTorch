@@ -3,3 +3,4 @@ data/perfect/
 .idea/
 __pycache__/
 README.md
+cog.yaml
