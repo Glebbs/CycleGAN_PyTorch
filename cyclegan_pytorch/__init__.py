@@ -1,11 +1,7 @@
-
-from .datasets import ImageDataset
-from .datasets import VideoDataset
-from .models import Discriminator
-from .models import Generator
+from .datasets import ImageDataset, VideoDataset
+from .models import Discriminator, Generator
 from .optim import DecayLR
-from .utils import ReplayBuffer
-from .utils import weights_init
+from .utils import ReplayBuffer, weights_init
 
 __all__ = [
     "ImageDataset",

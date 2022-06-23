@@ -1,8 +1,8 @@
 import glob
 import os
 import random
-import time
 from threading import Thread
+import time
 
 import cv2
 import numpy as np
@@ -15,16 +15,28 @@ class ImageDataset(Dataset):
         self.transform = transform
         self.unaligned = unaligned
 
-        self.files_A = sorted(glob.glob(os.path.join(root, f"{mode}/A") + "/*.*"))
-        self.files_B = sorted(glob.glob(os.path.join(root, f"{mode}/B") + "/*.*"))
+        self.files_A = sorted(
+            glob.glob(os.path.join(root, f"{mode}/A") + "/*.*")
+        )
+        self.files_B = sorted(
+            glob.glob(os.path.join(root, f"{mode}/B") + "/*.*")
+        )
 
     def __getitem__(self, index):
-        item_A = self.transform(Image.open(self.files_A[index % len(self.files_A)]))
+        item_A = self.transform(
+            Image.open(self.files_A[index % len(self.files_A)])
+        )
 
         if self.unaligned:
-            item_B = self.transform(Image.open(self.files_B[random.randint(0, len(self.files_B) - 1)]))
+            item_B = self.transform(
+                Image.open(
+                    self.files_B[random.randint(0, len(self.files_B) - 1)]
+                )
+            )
         else:
-            item_B = self.transform(Image.open(self.files_B[index % len(self.files_B)]))
+            item_B = self.transform(
+                Image.open(self.files_B[index % len(self.files_B)])
+            )
 
         return {"A": item_A, "B": item_B}
 
@@ -33,7 +45,7 @@ class ImageDataset(Dataset):
 
 
 class VideoDataset:
-    """ For reading camera or network data
+    """For reading camera or network data
 
     Load data types from data flow.
 
@@ -63,7 +75,9 @@ class VideoDataset:
             height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
             fps = capture.get(cv2.CAP_PROP_FPS) % 100
             _, self.images[i] = capture.read()  # guarantee first frame
-            thread = Thread(target=self.update, args=([i, capture]), daemon=True)
+            thread = Thread(
+                target=self.update, args=([i, capture]), daemon=True
+            )
             print(f"Success ({width}*{height} at {fps:.2f}FPS).")
             thread.start()
         print("")
@@ -99,7 +113,9 @@ class VideoDataset:
         image = np.stack(image, 0)
 
         # BGR convert to RGB (batch_size 3 x 416 x 416)
-        image = image[:, :, :, ::-1].transpose(0, 3, 1, 2)  # BGR to RGB, to bsx3x416x416
+        image = image[:, :, :, ::-1].transpose(
+            0, 3, 1, 2
+        )  # BGR to RGB, to bsx3x416x416
         # Return a contiguous array
         image = np.ascontiguousarray(image)
 
