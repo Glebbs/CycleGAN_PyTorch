@@ -1,5 +1,6 @@
 venv/
 data/
+outputs/
 .idea/
 __pycache__/
 weights/
