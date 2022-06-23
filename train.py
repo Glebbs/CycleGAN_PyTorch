@@ -83,10 +83,10 @@ if torch.cuda.is_available() and not args.cuda:
 # Dataset
 dataset = ImageDataset(root=os.path.join(args.dataroot, args.dataset),
                        transform=transforms.Compose([
-                           transforms.Resize(int(args.image_size * 0.5), Image.BICUBIC),
-                           # transforms.Resize(int(args.image_size * 1.12), Image.BICUBIC),
-                           # transforms.RandomCrop(args.image_size),
-                           # transforms.RandomHorizontalFlip(),
+                           # transforms.Resize(int(args.image_size * 0.5), Image.BICUBIC),
+                           transforms.Resize(int(args.image_size * 1.12), Image.BICUBIC),
+                           transforms.RandomCrop(args.image_size),
+                           transforms.RandomHorizontalFlip(),
                            transforms.ToTensor(),
                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]),
                        unaligned=True)
@@ -202,7 +202,7 @@ for epoch in range(0, args.epochs):
         # Calculate gradients for G_A and G_B
         errG.backward()
 
-        writer.add_scalar("errG/train", errG, epoch)
+        writer.add_scalar("logs/", errG, epoch)
         # Update G_A and G_B's weights
         optimizer_G.step()
 
@@ -228,7 +228,7 @@ for epoch in range(0, args.epochs):
         # Calculate gradients for D_A
         errD_A.backward()
 
-        writer.add_scalar("errD_A/train", errD_A, epoch)
+        writer.add_scalar("logs/", errD_A, epoch)
         # Update D_A weights
         optimizer_D_A.step()
 
@@ -254,7 +254,7 @@ for epoch in range(0, args.epochs):
         # Calculate gradients for D_B
         errD_B.backward()
 
-        writer.add_scalar("errD_B/train", errD_B, epoch)
+        writer.add_scalar("logs/", errD_B, epoch)
         # Update D_B weights
         optimizer_D_B.step()
 
