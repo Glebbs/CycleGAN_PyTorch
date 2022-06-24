@@ -66,9 +66,7 @@ torch.manual_seed(args.manualSeed)
 cudnn.benchmark = True
 
 if torch.cuda.is_available() and not args.cuda:
-    print(
-        "WARNING: You have a CUDA device, so you should probably run with --cuda"
-    )
+    print("WARNING: You have a CUDA device, so you should probably run with --cuda")
 
 # Dataset
 dataset = ImageDataset(
@@ -134,6 +132,4 @@ for i, data in progress_bar:
         normalize=True,
     )
 
-    progress_bar.set_description(
-        f"Process images {i + 1} of {len(dataloader)}"
-    )
+    progress_bar.set_description(f"Process images {i + 1} of {len(dataloader)}")

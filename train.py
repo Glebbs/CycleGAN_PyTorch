@@ -3,9 +3,9 @@ import itertools
 import os
 import random
 
+import torch.utils.data
 from PIL import Image
 from torch.backends import cudnn
-import torch.utils.data
 from torch.utils.tensorboard import SummaryWriter
 from torchvision import transforms, utils
 from tqdm import tqdm
@@ -126,9 +126,7 @@ torch.manual_seed(args.manualSeed)
 cudnn.benchmark = True
 
 if torch.cuda.is_available() and not args.cuda:
-    print(
-        "WARNING: You have a CUDA device, so you should probably run with --cuda"
-    )
+    print("WARNING: You have a CUDA device, so you should probably run with --cuda")
 
 # Dataset
 dataset = ImageDataset(
@@ -194,23 +192,13 @@ optimizer_G = torch.optim.Adam(
     lr=args.lr,
     betas=(0.5, 0.999),
 )
-optimizer_D_A = torch.optim.Adam(
-    netD_A.parameters(), lr=args.lr, betas=(0.5, 0.999)
-)
-optimizer_D_B = torch.optim.Adam(
-    netD_B.parameters(), lr=args.lr, betas=(0.5, 0.999)
-)
+optimizer_D_A = torch.optim.Adam(netD_A.parameters(), lr=args.lr, betas=(0.5, 0.999))
+optimizer_D_B = torch.optim.Adam(netD_B.parameters(), lr=args.lr, betas=(0.5, 0.999))
 
 lr_lambda = DecayLR(args.epochs, 0, args.decay_epochs).step
-lr_scheduler_G = torch.optim.lr_scheduler.LambdaLR(
-    optimizer_G, lr_lambda=lr_lambda
-)
-lr_scheduler_D_A = torch.optim.lr_scheduler.LambdaLR(
-    optimizer_D_A, lr_lambda=lr_lambda
-)
-lr_scheduler_D_B = torch.optim.lr_scheduler.LambdaLR(
-    optimizer_D_B, lr_lambda=lr_lambda
-)
+lr_scheduler_G = torch.optim.lr_scheduler.LambdaLR(optimizer_G, lr_lambda=lr_lambda)
+lr_scheduler_D_A = torch.optim.lr_scheduler.LambdaLR(optimizer_D_A, lr_lambda=lr_lambda)
+lr_scheduler_D_B = torch.optim.lr_scheduler.LambdaLR(optimizer_D_B, lr_lambda=lr_lambda)
 
 g_losses = []
 d_losses = []
@@ -231,12 +219,8 @@ for epoch in range(0, args.epochs):
         batch_size = real_image_A.size(0)
 
         # real data label is 1, fake data label is 0.
-        real_label = torch.full(
-            (batch_size, 1), 1, device=device, dtype=torch.float32
-        )
-        fake_label = torch.full(
-            (batch_size, 1), 0, device=device, dtype=torch.float32
-        )
+        real_label = torch.full((batch_size, 1), 1, device=device, dtype=torch.float32)
+        fake_label = torch.full((batch_size, 1), 0, device=device, dtype=torch.float32)
 
         ##############################################
         # (1) Update G network: Generators A2B and B2A
@@ -383,12 +367,8 @@ for epoch in range(0, args.epochs):
         netG_B2A.state_dict(),
         f"weights/{args.dataset}/netG_B2A_epoch_{epoch}.pth",
     )
-    torch.save(
-        netD_A.state_dict(), f"weights/{args.dataset}/netD_A_epoch_{epoch}.pth"
-    )
-    torch.save(
-        netD_B.state_dict(), f"weights/{args.dataset}/netD_B_epoch_{epoch}.pth"
-    )
+    torch.save(netD_A.state_dict(), f"weights/{args.dataset}/netD_A_epoch_{epoch}.pth")
+    torch.save(netD_B.state_dict(), f"weights/{args.dataset}/netD_B_epoch_{epoch}.pth")
 
     # Update learning rates
     lr_scheduler_G.step()

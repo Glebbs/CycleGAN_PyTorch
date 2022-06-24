@@ -1,11 +1,11 @@
-from pathlib import Path
 import tempfile
 import timeit
+from pathlib import Path
 
 import cog
+import torch.utils.data.distributed
 from PIL import Image
 from torch.backends import cudnn
-import torch.utils.data.distributed
 from torchvision import transforms, utils
 
 from cyclegan_pytorch import Generator
@@ -16,15 +16,11 @@ class CycleganPredictor(cog.Predictor):
         """Load the CycleGan pre-trained model"""
         model_name = "weights/horse2zebra/netG_A2B.pth"
         cudnn.benchmark = True
-        self.device = torch.device(
-            "cuda:0" if torch.cuda.is_available() else "cpu"
-        )
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         # create model
         self.model = Generator().to(self.device)
         # Load state dicts
-        self.model.load_state_dict(
-            torch.load(model_name, map_location=self.device)
-        )
+        self.model.load_state_dict(torch.load(model_name, map_location=self.device))
         # Set model mode
         self.model.eval()
 
@@ -46,9 +42,7 @@ class CycleganPredictor(cog.Predictor):
             [
                 transforms.Resize(image_size),
                 transforms.ToTensor(),
-                transforms.Normalize(
-                    mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)
-                ),
+                transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)),
             ]
         )
         image = pre_process(image).unsqueeze(0)

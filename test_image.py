@@ -2,9 +2,9 @@ import argparse
 import random
 import timeit
 
+import torch.utils.data.distributed
 from PIL import Image
 from torch.backends import cudnn
-import torch.utils.data.distributed
 from torchvision import transforms, utils
 
 from cyclegan_pytorch import Generator
@@ -50,10 +50,7 @@ torch.manual_seed(args.manualSeed)
 cudnn.benchmark = True
 
 if torch.cuda.is_available() and not args.cuda:
-    print(
-        "WARNING: You have a CUDA device, so you "
-        "should probably run with --cuda"
-    )
+    print("WARNING: You have a CUDA device, so you " "should probably run with --cuda")
 
 device = torch.device("cuda:0" if args.cuda else "cpu")
 
