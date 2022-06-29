@@ -1700,10 +1700,21 @@ python-versions = "*"
 [package.dependencies]
 notebook = ">=4.4.1"
 
+[[package]]
+name = "yadisk"
+version = "1.2.15"
+description = "Библиотека-клиент REST API Яндекс.Диска / Yandex.Disk REST API client library"
+category = "main"
+optional = false
+python-versions = ">=3"
+
+[package.dependencies]
+requests = "*"
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "7c5601aa20f69d84d43a2f45b00a2f1ebb659db570c82a4afec03e6232632ab7"
+content-hash = "831ddbf9b4db48833929128063a7e67c74232812c41fc4b2bf0f66a8832f464d"
 
 [metadata.files]
 absl-py = [
@@ -2871,4 +2882,8 @@ werkzeug = [
 widgetsnbextension = [
     {file = "widgetsnbextension-3.6.1-py2.py3-none-any.whl", hash = "sha256:954e0faefdd414e4e013f17dbc7fd86f24cf1d243a3ac85d5f0fc2c2d2b50c66"},
     {file = "widgetsnbextension-3.6.1.tar.gz", hash = "sha256:9c84ae64c2893c7cbe2eaafc7505221a795c27d68938454034ac487319a75b10"},
+]
+yadisk = [
+    {file = "yadisk-1.2.15-py3-none-any.whl", hash = "sha256:ea45dc57dc9a91795e08849fb07d39ce04f2130f09af55dc4980e75786dcba49"},
+    {file = "yadisk-1.2.15.tar.gz", hash = "sha256:73312c1263d660ac79401400e65c7b7a93d90f132d33107e25c8ac88ebf01110"},
 ]
