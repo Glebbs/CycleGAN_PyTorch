@@ -7,3 +7,4 @@ __pycache__/
 weights/
 README.md
 cog.yaml
+video_to_dataset.py

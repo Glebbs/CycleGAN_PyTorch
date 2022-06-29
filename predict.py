@@ -1,26 +1,32 @@
+from pathlib import Path
 import tempfile
 import timeit
-from pathlib import Path
 
 import cog
-import torch.utils.data.distributed
 from PIL import Image
 from torch.backends import cudnn
+import torch.utils.data.distributed
 from torchvision import transforms, utils
 
 from cyclegan_pytorch import Generator
 
 
 class CycleganPredictor(cog.Predictor):
+    """."""
+
     def setup(self):
         """Load the CycleGan pre-trained model"""
         model_name = "weights/horse2zebra/netG_A2B.pth"
         cudnn.benchmark = True
-        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device(
+            "cuda:0" if torch.cuda.is_available() else "cpu"
+        )
         # create model
         self.model = Generator().to(self.device)
         # Load state dicts
-        self.model.load_state_dict(torch.load(model_name, map_location=self.device))
+        self.model.load_state_dict(
+            torch.load(model_name, map_location=self.device)
+        )
         # Set model mode
         self.model.eval()
 
@@ -31,18 +37,20 @@ class CycleganPredictor(cog.Predictor):
         default=256,
         help="size of the data crop (squared assumed)",
     )
-    def predict(self, input, image_size):
+    def predict(self, inp, image_size):
         """Separate the vocal track from an audio mixture"""
         # compute prediction
 
         # Load image and pre-process
         output_path = Path(tempfile.mkdtemp()) / "output.png"
-        image = Image.open(str(input))
+        image = Image.open(str(inp))
         pre_process = transforms.Compose(
             [
                 transforms.Resize(image_size),
                 transforms.ToTensor(),
-                transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)),
+                transforms.Normalize(
+                    mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)
+                ),
             ]
         )
         image = pre_process(image).unsqueeze(0)

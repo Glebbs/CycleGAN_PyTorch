@@ -1,8 +1,8 @@
 import glob
 import os
 import random
-import time
 from threading import Thread
+import time
 
 import cv2
 import numpy as np
@@ -11,22 +11,35 @@ from torch.utils.data import Dataset
 
 
 class ImageDataset(Dataset):
+    """."""
+
     def __init__(self, root, transform=None, unaligned=False, mode="train"):
+        """."""
         self.transform = transform
         self.unaligned = unaligned
 
-        self.files_A = sorted(glob.glob(os.path.join(root, f"{mode}/A") + "/*.*"))
-        self.files_B = sorted(glob.glob(os.path.join(root, f"{mode}/B") + "/*.*"))
+        self.files_A = sorted(
+            glob.glob(os.path.join(root, f"{mode}/A") + "/*.*")
+        )
+        self.files_B = sorted(
+            glob.glob(os.path.join(root, f"{mode}/B") + "/*.*")
+        )
 
     def __getitem__(self, index):
-        item_A = self.transform(Image.open(self.files_A[index % len(self.files_A)]))
+        item_A = self.transform(
+            Image.open(self.files_A[index % len(self.files_A)])
+        )
 
         if self.unaligned:
             item_B = self.transform(
-                Image.open(self.files_B[random.randint(0, len(self.files_B) - 1)])
+                Image.open(
+                    self.files_B[random.randint(0, len(self.files_B) - 1)]
+                )
             )
         else:
-            item_B = self.transform(Image.open(self.files_B[index % len(self.files_B)]))
+            item_B = self.transform(
+                Image.open(self.files_B[index % len(self.files_B)])
+            )
 
         return {"A": item_A, "B": item_B}
 
@@ -45,7 +58,7 @@ class VideoDataset:
     """
 
     def __init__(self, dataroot, image_size=416):
-
+        """."""
         self.mode = "images"
         self.image_size = image_size
 
@@ -65,12 +78,15 @@ class VideoDataset:
             height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
             fps = capture.get(cv2.CAP_PROP_FPS) % 100
             _, self.images[i] = capture.read()  # guarantee first frame
-            thread = Thread(target=self.update, args=([i, capture]), daemon=True)
+            thread = Thread(
+                target=self.update, args=([i, capture]), daemon=True
+            )
             print(f"Success ({width}*{height} at {fps:.2f}FPS).")
             thread.start()
         print("")
 
     def update(self, index, capture):
+        """."""
         # Read next stream frame in a daemon thread
         num = 0
         while capture.isOpened():
@@ -95,7 +111,7 @@ class VideoDataset:
             raise StopIteration
 
         # Letterbox
-        image = [x for x in raw_image]
+        image = list(raw_image)  # [x for x in raw_image]
 
         # Stack
         image = np.stack(image, 0)

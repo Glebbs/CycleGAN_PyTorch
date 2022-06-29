@@ -2,11 +2,10 @@ import argparse
 import os
 import random
 
-import torch.backends.cudnn as cudnn
-import torch.utils.data
+from torch.backends import cudnn
 import torch.utils.data.distributed
-import torchvision.transforms as transforms
-import torchvision.utils as vutils
+from torchvision import transforms
+from torchvision import utils
 from tqdm import tqdm
 
 from cyclegan_pytorch import Generator, ImageDataset
@@ -66,7 +65,9 @@ torch.manual_seed(args.manualSeed)
 cudnn.benchmark = True
 
 if torch.cuda.is_available() and not args.cuda:
-    print("WARNING: You have a CUDA device, so you should probably run with --cuda")
+    print(
+        "WARNING: You have a CUDA device, so you should probably run with --cuda"
+    )
 
 # Dataset
 dataset = ImageDataset(
@@ -121,15 +122,17 @@ for i, data in progress_bar:
     fake_image_B = 0.5 * (netG_A2B(real_images_A).data + 1.0)
 
     # Save image files
-    vutils.save_image(
+    utils.save_image(
         fake_image_A.detach(),
         f"{args.outf}/{args.dataset}/A/{i + 1:04d}.png",
         normalize=True,
     )
-    vutils.save_image(
+    utils.save_image(
         fake_image_B.detach(),
         f"{args.outf}/{args.dataset}/B/{i + 1:04d}.png",
         normalize=True,
     )
 
-    progress_bar.set_description(f"Process images {i + 1} of {len(dataloader)}")
+    progress_bar.set_description(
+        f"Process images {i + 1} of {len(dataloader)}"
+    )

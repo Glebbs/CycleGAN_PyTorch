@@ -1,12 +1,14 @@
 import torch
-import torch.nn.functional as F
 from torch import nn
+import torch.nn.functional as F
 
 
 class Discriminator(nn.Module):
+    """."""
+
     def __init__(self):
         """."""
-        super(Discriminator, self).__init__()
+        super().__init__()
 
         self.main = nn.Sequential(
             nn.Conv2d(3, 64, 4, stride=2, padding=1),
@@ -24,6 +26,7 @@ class Discriminator(nn.Module):
         )
 
     def forward(self, x):
+        """."""
         x = self.main(x)
         x = F.avg_pool2d(x, x.size()[2:])
         x = torch.flatten(x, 1)
@@ -31,8 +34,11 @@ class Discriminator(nn.Module):
 
 
 class Generator(nn.Module):
+    """."""
+
     def __init__(self):
-        super(Generator, self).__init__()
+        """."""
+        super().__init__()
         self.main = nn.Sequential(
             # Initial convolution block
             nn.ReflectionPad2d(3),
@@ -57,10 +63,14 @@ class Generator(nn.Module):
             ResidualBlock(256),
             ResidualBlock(256),
             # Upsampling
-            nn.ConvTranspose2d(256, 128, 3, stride=2, padding=1, output_padding=1),
+            nn.ConvTranspose2d(
+                256, 128, 3, stride=2, padding=1, output_padding=1
+            ),
             nn.InstanceNorm2d(128),
             nn.ReLU(inplace=True),
-            nn.ConvTranspose2d(128, 64, 3, stride=2, padding=1, output_padding=1),
+            nn.ConvTranspose2d(
+                128, 64, 3, stride=2, padding=1, output_padding=1
+            ),
             nn.InstanceNorm2d(64),
             nn.ReLU(inplace=True),
             # Output layer
@@ -70,12 +80,16 @@ class Generator(nn.Module):
         )
 
     def forward(self, x):
+        """."""
         return self.main(x)
 
 
 class ResidualBlock(nn.Module):
+    """."""
+
     def __init__(self, in_channels):
-        super(ResidualBlock, self).__init__()
+        """."""
+        super().__init__()
 
         self.res = nn.Sequential(
             nn.ReflectionPad2d(1),
@@ -88,4 +102,5 @@ class ResidualBlock(nn.Module):
         )
 
     def forward(self, x):
+        """."""
         return x + self.res(x)

@@ -6,7 +6,10 @@ import torch
 
 
 class ReplayBuffer:
+    """."""
+
     def __init__(self, max_size=50):
+        """."""
         assert (
             max_size > 0
         ), "Empty buffer or trying to create a black hole. Be careful."
@@ -14,6 +17,7 @@ class ReplayBuffer:
         self.data = []
 
     def push_and_pop(self, data):
+        """."""
         to_return = []
         for element in data.data:
             element = torch.unsqueeze(element, 0)
@@ -32,6 +36,7 @@ class ReplayBuffer:
 
 # custom weights initialization called on netG and netD
 def weights_init(m):
+    """."""
     classname = m.__class__.__name__
     if classname.find("Conv") != -1:
         torch.nn.init.normal_(m.weight, 0.0, 0.02)
@@ -42,6 +47,7 @@ def weights_init(m):
 
 # changing directories
 def order_dataset():
+    """."""
     folders = glob.glob(
         "/media/vlad/20127138-1a35-451b-85c0-a84dbc12ae79/storage/gta5_2_real/cityscapes_images/val/*"
     )
