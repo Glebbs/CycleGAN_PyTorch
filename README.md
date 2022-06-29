@@ -85,4 +85,4 @@ $ python3 train.py --dataset snow_dataset --cuda
 #### Results
 Train losses:
 
-!https://github.com/Glebbs/cycle_gan_pytorch/blob/master/assets/errD_B_train.svg
+![https://github.com/Glebbs/cycle_gan_pytorch/blob/master/assets/errD_B_train.svg](https://github.com/Glebbs/cycle_gan_pytorch/blob/master/assets/errD_B_train.svg)
