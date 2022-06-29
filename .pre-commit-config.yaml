@@ -21,7 +21,7 @@ repos:
       - id: check-yaml
       - id: debug-statements
       - id: end-of-file-fixer
-        exclude: README.md
+        exclude: README.md, assets/
       - id: trailing-whitespace
       - id: flake8
         additional_dependencies:
