@@ -1,21 +1,21 @@
-# CycleGAN-PyTorch sim3real task
+# CycleGAN-PyTorch sim2real task
 
-<img src="https://github.com/AnyashaTk/-CycleGAN_sim2real/blob/main/assets/example_in.png" width="400" /> <img src="https://github.com/AnyashaTk/-CycleGAN_sim2real/blob/main/assets/example_out.png" width="400" />
+<img src="https://github.com/Glebbs/cycle_gan_pytorch/blob/master/assets/example_in.png" width="400" /> <img src="https://github.com/Glebbs/cycle_gan_pytorch/blob/master/assets/example_out.png" width="400" />
 
 ### Installation
 
 #### Clone and install requirements
 
 ```bash
-$ git clone https://github.com/AnyashaTk/CycleGAN_sim2real_task.git
-$ cd  CycleGAN_sim2real_task/
-$ pip3 install -r requirements.txt
+$ git clone https://github.com/Glebbs/cycle_gan_pytorch.git
+$ cd  cycle_gan_pytorch/
+$ poetry install
 ```
 
 #### Download dataset
 
 ```bash
-# example: perfect
+# example: snow_dataset
 $ python3 get_dataset.py
 ```
 
@@ -24,8 +24,8 @@ $ python3 get_dataset.py
 The following commands can be used to test the whole test.
 
 ```bash
-# Example: perfect
-$ python3 test.py --dataset perfect --cuda
+# Example: snow_dataset
+$ python3 test.py --dataset snow_dataset --cuda
 ```
 
 For single image processing, use the following command.
@@ -78,15 +78,11 @@ optional arguments:
 
 
 ```bash
-# Example: perfect
-$ python3 train.py --dataset perfect --cuda
+# Example: snow_dataset
+$ python3 train.py --dataset snow_dataset --cuda
 ```
 
 #### Results
 Train losses:
 
-![https://myoctocat.com/assets/images/base-octocat.svg](https://github.com/AnyashaTk/-CycleGAN_sim2real/blob/main/assets/errD_B_train.svg)
-
-Inference result:
-
-<img src="https://github.com/AnyashaTk/-CycleGAN_sim2real/blob/main/assets/example_in.png" width="400" /> <img src="https://github.com/AnyashaTk/-CycleGAN_sim2real/blob/main/assets/example_out.png" width="400" />
+!https://github.com/Glebbs/cycle_gan_pytorch/blob/master/assets/errD_B_train.svg
