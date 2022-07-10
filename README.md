@@ -1,6 +1,6 @@
 # Simulation to reality style transfer using CycleGan
 
-<img src="https://github.com/Glebbs/cycle_gan_pytorch/blob/master/assets/example_in.png" width="400" /> <img src="https://github.com/Glebbs/cycle_gan_pytorch/blob/master/assets/example_out.png" width="400" />
+<img src="https://github.com/Glebbs/cycle_gan_pytorch/blob/master/assets/orig.jpg" width="400" /> <img src="https://github.com/Glebbs/cycle_gan_pytorch/blob/master/assets/processed.jpg" width="400" />
 
 ### Installation
 
